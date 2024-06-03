@@ -1,23 +1,31 @@
 package stos.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScoreBoard {
 
   private int playerOneScore = 0;
   private int playerTwoScore = 0;
+  private final Map<Integer, String> ordinalToText = new HashMap<>() {
+    {
+      put(0, "Love");
+      put(1, "Fifteen");
+      put(2, "Thirty");
+    }
+  };
 
   public String getScore() {
-    if (playerOneScore == 1 && playerTwoScore == 0) {
-      return "Fifteen Love";
-    } else if (playerOneScore == 1 && playerTwoScore == 1) {
-      return "Fifteen All";
+    if (playerOneScore == 3 && playerTwoScore == 3) {
+      return "Deuce";
+    } else if (playerOneScore == playerTwoScore) {
+      return ordinalToText.get(playerOneScore) + ' ' + "All";
+    } else if (playerOneScore > 3) {
+      return "Game Player One";
+    } else if (playerTwoScore > 3) {
+      return "Game Player Two";
     }
-
-    if (playerTwoScore == 1) {
-      return "Love Fifteen";
-    } else if (playerTwoScore == 2) {
-      return "Love Thirty";
-    }
-    return "Zero Love";
+    return ordinalToText.get(playerOneScore) + ' ' + ordinalToText.get(playerTwoScore);
   }
 
   public void playerOneScores() {

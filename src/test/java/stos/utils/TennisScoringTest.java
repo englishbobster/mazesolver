@@ -10,7 +10,7 @@ class TennisScoringTest {
   void start_of_game_give_zero_love() {
     var scoreBoard = new ScoreBoard();
     var score = scoreBoard.getScore();
-    assertEquals("Zero Love", score);
+    assertEquals("Love All", score);
   }
 
   @Test
@@ -46,4 +46,42 @@ class TennisScoringTest {
     var score = scoreBoard.getScore();
     assertEquals("Fifteen All", score);
   }
+
+  @Test
+  void player_one_takes_the_game_clean_sheet() {
+    var scoreBoard = new ScoreBoard();
+    scoreBoard.playerOneScores();
+    scoreBoard.playerOneScores();
+    scoreBoard.playerOneScores();
+    scoreBoard.playerOneScores();
+    var score = scoreBoard.getScore();
+    assertEquals("Game Player One", score);
+  }
+
+  @Test
+  void player_two_takes_the_game_clean_sheet() {
+    var scoreBoard = new ScoreBoard();
+    scoreBoard.playerTwoScores();
+    scoreBoard.playerTwoScores();
+    scoreBoard.playerTwoScores();
+    scoreBoard.playerTwoScores();
+    var score = scoreBoard.getScore();
+    assertEquals("Game Player Two", score);
+  }
+
+  @Test
+  void player_one_and_two_are_equal_on_forty_points() {
+    var scoreBoard = new ScoreBoard();
+    scoreBoard.playerTwoScores();
+    scoreBoard.playerTwoScores();
+    scoreBoard.playerTwoScores();
+
+    scoreBoard.playerOneScores();
+    scoreBoard.playerOneScores();
+    scoreBoard.playerOneScores();
+
+    var score = scoreBoard.getScore();
+    assertEquals("Deuce", score);
+  }
+
 }
