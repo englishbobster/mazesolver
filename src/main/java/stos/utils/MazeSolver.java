@@ -1,7 +1,8 @@
 package stos.utils;
 
-import java.util.Arrays;
 import org.apache.commons.lang3.SerializationUtils;
+
+import java.util.Arrays;
 
 public class MazeSolver {
 
@@ -15,25 +16,31 @@ public class MazeSolver {
     }
 
     String[][] result = SerializationUtils.clone(maze);
-    int lastKnownColumnPosition = 0;
-    int lastKnownRowPosition = 0;
-    for (int column = 0; column < maze[0].length; column++) {
-      result[0][column] = ":x";
-      lastKnownColumnPosition = column;
-    }
-    for (int row = 0; row < maze.length; row++) {
-      result[row][lastKnownColumnPosition] = ":x";
-      lastKnownRowPosition = row;
-    }
-    if (!maze[lastKnownRowPosition][lastKnownColumnPosition].equals(":E")) {
-      for (int column = lastKnownColumnPosition; column >= 0; column--) {
-        result[lastKnownRowPosition][column] = ":x";
-        if(maze[lastKnownRowPosition][column].equals(":E")) {
-          break;
-        }
+
+    int x = 0;
+    int y = 0;
+    while (!hasReachedTheEnd(maze, x, y)) {
+      while ((maze[0].length < x + 1) && !(result[x + 1][y].equals(":x"))) {
+        result[x][y]=":x";
+        x++;
+      }
+      while (maze.length < y + 1) {
+        result[x][y]=":x";
+        y++;
+      }
+      while (x > 0) {
+        result[x][y]=":x";
+        x--;
+      }
+      while ((y > 0) && !(result[x][y - 1].equals(":x"))) {
+        result[x][y]=":x";
+        y--;
       }
     }
-
     return result;
+  }
+
+  private boolean hasReachedTheEnd(String[][] maze, int x, int y) {
+    return maze[x][y].equals(":E");
   }
 }
